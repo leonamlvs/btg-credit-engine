@@ -1,0 +1,54 @@
+{
+  "name": "btg-credit-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "BTG Pactual Credit Engine backend challenge",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "24.19.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "docs:check": "node scripts/docs-check.mjs",
+    "verify": "yarn format:check && yarn lint && yarn typecheck && yarn test && yarn docs:check && yarn build"
+  },
+  "packageManager": "yarn@4.18.0+sha512.fcb8716fe7cd0eece141ffc18b92193a9df9204c1ba83189c288835223fc0bbe64af473bab0d5e9927a7daeb5caf2bb07eb2787cc9338ca040ea125f2a1f2f7e",
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^9.1.0",
+    "express": "5",
+    "helmet": "^8.3.0",
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "4"
+  },
+  "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "@babel/preset-typescript": "^8.0.1",
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "30",
+    "@types/express": "^5.0.6",
+    "@types/node": "24",
+    "@types/supertest": "^7.2.1",
+    "@types/swagger-ui-express": "^4.1.8",
+    "babel-jest": "30",
+    "eslint": "^10.8.1",
+    "eslint-config-prettier": "^10.1.8",
+    "jest": "30",
+    "prettier": "^3.9.6",
+    "supertest": "^7.2.2",
+    "tsx": "^4.23.12",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.67.0"
+  }
+}
