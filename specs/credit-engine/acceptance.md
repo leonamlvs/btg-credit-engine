@@ -133,25 +133,25 @@ Each criterion traces to one or more requirements and identifies its verificatio
 
 ### AC-012 — EXECUTIVE matching
 
-| Field               | Value                                                                                               |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| AC ID               | `AC-012`                                                                                            |
-| Scenario            | **Spec-derived:** each executive keyword is embedded in a job title, including mixed-case variants. |
-| Expected result     | Every listed executive keyword assigns priority 1 `EXECUTIVE` with multiplier `2.0`.                |
-| Traced REQ IDs      | `REQ-012`, `REQ-013`, `REQ-014`, `REQ-030`                                                          |
-| Verification level  | Parameterized unit job-category test                                                                |
-| Blocking assumption | None                                                                                                |
+| Field               | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-012`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Scenario            | **Spec-derived:** evaluate every published executive keyword. For the standalone acronym `COO`, include `COO`, `COO Brazil`, `coo`, `(COO)`, `ex-COO`, `COO/CTO`, `COO_Brazil`, `Coordinator`, `myCOO`, `COO2`, and `COOOperations`.                                                                                                                                                                                                                                                                                               |
+| Expected result     | Every published executive keyword assigns priority 1 `EXECUTIVE` with multiplier `2.0` under its approved matching operator. `COO`, `COO Brazil`, `coo`, `(COO)`, `ex-COO`, `COO/CTO`, and `COO_Brazil` match case-insensitively because punctuation, whitespace, and underscores delimit the acronym. `Coordinator`, `myCOO`, `COO2`, and `COOOperations` do not match `COO` because an adjacent letter or digit prevents a standalone match. Non-acronym executive keywords retain ordinary case-insensitive substring matching. |
+| Traced REQ IDs      | `REQ-012`, `REQ-013`, `REQ-014`, `REQ-030`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Verification level  | Parameterized unit job-category test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Blocking assumption | None; approved standalone-term behavior recorded in `ASM-010`                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
 ### AC-013 — SENIOR_PROFESSIONAL matching
 
-| Field               | Value                                                                                                                                    |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| AC ID               | `AC-013`                                                                                                                                 |
-| Scenario            | **Spec-derived:** each senior-professional keyword is embedded in a job title, including mixed-case variants, with no executive keyword. |
-| Expected result     | Every listed keyword assigns priority 2 `SENIOR_PROFESSIONAL` with multiplier `1.5`.                                                     |
-| Traced REQ IDs      | `REQ-012`, `REQ-013`, `REQ-015`, `REQ-030`                                                                                               |
-| Verification level  | Parameterized unit job-category test                                                                                                     |
-| Blocking assumption | None                                                                                                                                     |
+| Field               | Value                                                                                                                                                                                                 |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-013`                                                                                                                                                                                              |
+| Scenario            | **Spec-derived:** senior-professional keywords are matched case-insensitively with no higher-priority match under the approved matching policy. Cases include `Coordinator` and `Senior Coordinator`. |
+| Expected result     | `Coordinator` and `Senior Coordinator` assign priority 2 `SENIOR_PROFESSIONAL` with multiplier `1.5`; `Coordinator` does not match the standalone executive acronym `COO`.                            |
+| Traced REQ IDs      | `REQ-012`, `REQ-013`, `REQ-015`, `REQ-030`                                                                                                                                                            |
+| Verification level  | Parameterized unit job-category test                                                                                                                                                                  |
+| Blocking assumption | None; acronym matching interpretation recorded in `ASM-010`                                                                                                                                           |
 
 ### AC-014 — MID_PROFESSIONAL matching
 
@@ -263,16 +263,16 @@ Each criterion traces to one or more requirements and identifies its verificatio
 | Verification level  | Unit credit-limit order test                                                                                                                                                                                            |
 | Blocking assumption | None                                                                                                                                                                                                                    |
 
-### AC-023 — Unambiguous nearest-100 rounding
+### AC-023 — Nearest-100 rounding
 
-| Field               | Value                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| AC ID               | `AC-023`                                                                                                                 |
-| Scenario            | **Spec-derived formula cases:** uncapped pre-round values are `10,149` and `10,151`. Exact midpoint values are excluded. |
-| Expected result     | `10,149` rounds to `10,100`, and `10,151` rounds to `10,200`.                                                            |
-| Traced REQ IDs      | `REQ-021`, `REQ-031`                                                                                                     |
-| Verification level  | Parameterized unit rounding test                                                                                         |
-| Blocking assumption | None for these cases; exact midpoint behavior remains unresolved under `ASM-007`                                         |
+| Field               | Value                                                                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-023`                                                                                                                                            |
+| Scenario            | **Spec-derived formula cases:** uncapped pre-round values are `10,149`, `10,151`, `1,750`, and `3,750`.                                             |
+| Expected result     | `10,149` rounds to `10,100`; `10,151` rounds to `10,200`; exact midpoint ties round upward, so `1,750` becomes `1,800` and `3,750` becomes `3,800`. |
+| Traced REQ IDs      | `REQ-021`, `REQ-031`                                                                                                                                |
+| Verification level  | Parameterized unit rounding test                                                                                                                    |
+| Blocking assumption | None; midpoint interpretation resolved in `ASM-007`                                                                                                 |
 
 ### AC-024 — CLUSTER_D denial
 
@@ -289,14 +289,14 @@ Each criterion traces to one or more requirements and identifies its verificatio
 
 ### AC-025 — Valid classification request
 
-| Field               | Value                                                                                                                                                       |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AC ID               | `AC-025`                                                                                                                                                    |
-| Scenario            | A valid customer object is posted to `/customers/classify`.                                                                                                 |
-| Expected result     | The full request/response cycle classifies the customer and returns the same customer enriched with every field required by the referenced output contract. |
-| Traced REQ IDs      | `REQ-025`, `REQ-026`, `REQ-034`                                                                                                                             |
-| Verification level  | Integration test                                                                                                                                            |
-| Blocking assumption | `ASM-002` and `ASM-008` — exact output shape and success contract are unavailable                                                                           |
+| Field               | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-025`                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Scenario            | **Spec-derived:** valid customer objects producing `CLUSTER_A`, `CLUSTER_B`, `CLUSTER_C`, and `CLUSTER_D` are posted to `/customers/classify`.                                                                                                                                                                                                                                                                                                                    |
+| Expected result     | Each request returns HTTP `200 OK` with the original accepted customer object directly enriched at the top level with exactly these calculated fields: `cluster_id`, `cluster_name`, `job_category`, `monthly_income`, `approved`, and `approved_limit`. A–C return `approved = true`; D returns `approved = false`. Monetary fields are JSON numbers in BRL units. The body has no success envelope and exposes no internal calculation or rule-engine metadata. |
+| Traced REQ IDs      | `REQ-011`, `REQ-019`, `REQ-021`, `REQ-025`, `REQ-026`, `REQ-034`                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Verification level  | Parameterized integration test                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Blocking assumption | None; approved fallback response recorded in `ASM-002` and HTTP behavior in `ASM-008`                                                                                                                                                                                                                                                                                                                                                                             |
 
 ### AC-026 — Stateless calls
 
@@ -311,14 +311,14 @@ Each criterion traces to one or more requirements and identifies its verificatio
 
 ### AC-027 — Invalid or missing request fields
 
-| Field               | Value                                                                                                                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| AC ID               | `AC-027`                                                                                                                                                                             |
-| Scenario            | **Spec-derived:** requests to `/customers/classify` contain a missing schema field, a wrong declared type, an out-of-range score, an invalid region, or an invalid market-debt type. |
-| Expected result     | Each request returns an appropriate error response and does not return a successful classification. Exact status codes and error bodies await the HTTP-contract decision.            |
-| Traced REQ IDs      | `REQ-035`                                                                                                                                                                            |
-| Verification level  | Parameterized integration test                                                                                                                                                       |
-| Blocking assumption | `ASM-008` — exact error status and body are unresolved                                                                                                                               |
+| Field               | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-027`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Scenario            | **Spec-derived:** requests to `/customers/classify` contain a missing schema field, a wrong declared type, an out-of-range score, an invalid region, an invalid market-debt type, or malformed JSON.                                                                                                                                                                                                                                                                                              |
+| Expected result     | Every case returns HTTP `400 Bad Request` and the shared application-owned `{ "error": { "code", "message", "details" } }` envelope. Schema failures use code `VALIDATION_ERROR`, message `Request validation failed`, and stable path/message details without unnecessary Zod-specific structure. Malformed JSON uses code `MALFORMED_JSON`, message `Request body contains invalid JSON`, and `details = []` with the same shared envelope schema. No case returns a successful classification. |
+| Traced REQ IDs      | `REQ-035`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Verification level  | Parameterized integration test                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Blocking assumption | None; approved HTTP error contract recorded in `ASM-008`                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 ### AC-028 — Six official sample customers
 
@@ -329,20 +329,20 @@ Each criterion traces to one or more requirements and identifies its verificatio
 | Expected result     | Every response exactly matches the corresponding official expected output.                        |
 | Traced REQ IDs      | `REQ-026`, `REQ-034`, `REQ-036`                                                                   |
 | Verification level  | Parameterized integration test                                                                    |
-| Blocking assumption | `ASM-001` and `ASM-002` — the official fixture and output contract are missing                    |
+| Blocking assumption | `ASM-001` — the official fixture and its six expected responses are missing                       |
 
 ## Test-suite and delivery obligations
 
 ### AC-029 — Required unit-test coverage
 
-| Field               | Value                                                                                                                                                                                  |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AC ID               | `AC-029`                                                                                                                                                                               |
-| Scenario            | The unit-test suite is inspected and run.                                                                                                                                              |
-| Expected result     | It covers every cluster and boundary, job matching case-insensitivity and priority, base formula, single penalty, cap, unambiguous rounding, all 20 income combinations, and D denial. |
-| Traced REQ IDs      | `REQ-028`, `REQ-029`, `REQ-030`, `REQ-031`, `REQ-032`, `REQ-033`                                                                                                                       |
-| Verification level  | Test-suite inspection and execution                                                                                                                                                    |
-| Blocking assumption | None; midpoint rounding remains outside the asserted cases under `ASM-007`                                                                                                             |
+| Field               | Value                                                                                                                                                                                                                 |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-029`                                                                                                                                                                                                              |
+| Scenario            | The unit-test suite is inspected and run.                                                                                                                                                                             |
+| Expected result     | It covers every cluster and boundary, job matching case-insensitivity and priority, base formula, single penalty, cap, nearest-100 rounding including upward midpoint ties, all 20 income combinations, and D denial. |
+| Traced REQ IDs      | `REQ-028`, `REQ-029`, `REQ-030`, `REQ-031`, `REQ-032`, `REQ-033`                                                                                                                                                      |
+| Verification level  | Test-suite inspection and execution                                                                                                                                                                                   |
+| Blocking assumption | None; midpoint behavior is resolved in `ASM-007`                                                                                                                                                                      |
 
 ### AC-030 — Required integration-test coverage
 
@@ -350,10 +350,10 @@ Each criterion traces to one or more requirements and identifies its verificatio
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | AC ID               | `AC-030`                                                                                                                                                 |
 | Scenario            | The integration-test suite is inspected and run.                                                                                                         |
-| Expected result     | It exercises valid and invalid full request/response cycles and contains the official six-sample comparison when the missing artifacts become available. |
+| Expected result     | It exercises valid and invalid full request/response cycles and contains the official six-sample comparison when the official fixture becomes available. |
 | Traced REQ IDs      | `REQ-028`, `REQ-034`, `REQ-035`, `REQ-036`                                                                                                               |
 | Verification level  | Test-suite inspection and execution                                                                                                                      |
-| Blocking assumption | `ASM-001`, `ASM-002`, and `ASM-008` for the unavailable exact assertions                                                                                 |
+| Blocking assumption | `ASM-001` only for the unavailable official six-sample comparison                                                                                        |
 
 ### AC-031 — Single-command test execution
 
@@ -387,3 +387,16 @@ Each criterion traces to one or more requirements and identifies its verificatio
 | Traced REQ IDs      | `REQ-001`, `REQ-002`                                                                                                                                                                                                    |
 | Verification level  | API, architecture, and configuration inspection                                                                                                                                                                         |
 | Blocking assumption | None                                                                                                                                                                                                                    |
+
+## Approved fallback representation
+
+### AC-034 — Monetary JSON representation
+
+| Field               | Value                                                                                                                                                                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC ID               | `AC-034`                                                                                                                                                                                                                                            |
+| Scenario            | **Spec-derived contract cases:** serialize BRL amounts of `6500`, `6500.25`, and `6500.5` in a calculated monetary field.                                                                                                                           |
+| Expected result     | The JSON values are the numbers `6500`, `6500.25`, and `6500.5`, representing R$ 6.500,00, R$ 6.500,25, and R$ 6.500,50 respectively. They are not formatted currency strings or integer minor units, and trailing decimal zeroes are not required. |
+| Traced REQ IDs      | `REQ-019`, `REQ-021`, `REQ-026`                                                                                                                                                                                                                     |
+| Verification level  | Response-schema and serialization contract test                                                                                                                                                                                                     |
+| Blocking assumption | None; approved monetary representation recorded in `ASM-002`                                                                                                                                                                                        |
