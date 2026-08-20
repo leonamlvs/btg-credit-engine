@@ -7,7 +7,7 @@ personalized credit limit.
 
 ## Live demo
 
-Not deployed yet:
+Deployed on Render. As it's hosted on the free tier, the service may take a few seconds to wake up after inactivity.
 
 - Swagger UI: <https://btg-credit-engine.onrender.com/docs>
 - Health check: <https://btg-credit-engine.onrender.com/health>
