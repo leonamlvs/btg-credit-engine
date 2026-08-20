@@ -1,5 +1,9 @@
 # Business Rule Configuration
 
-The actual rule files will be created only after the challenge requirements are extracted and reviewed.
+`credit-engine.v1.json` is the versioned source of truth for the published credit-engine
+business values and conditions. It is validated once at application startup before any request is
+accepted.
 
-Do not invent rule structure or values here before the technical plan is approved.
+The schema deliberately supports only the operators required by the approved specification. Rule
+changes must preserve the structural invariants enforced by the runtime schema and must be covered
+by exact-value tests.

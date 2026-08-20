@@ -1,9 +1,14 @@
 import { createApp } from './app';
 import { loadEnvironment } from './config/env.schema';
+import { createCustomerClassifier } from './modules/credit-engine/application/classify-customer';
+import { loadRuleConfiguration } from './modules/credit-engine/config/load-rule-configuration';
 import { logger } from './shared/logger/logger';
 
 const environment = loadEnvironment(process.env);
-const app = createApp();
+const ruleConfiguration = loadRuleConfiguration();
+const app = createApp({
+  classifyCustomer: createCustomerClassifier(ruleConfiguration),
+});
 
 const server = app.listen(environment.PORT, () => {
   logger.info({ port: environment.PORT }, 'HTTP server started');
