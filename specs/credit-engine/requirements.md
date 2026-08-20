@@ -204,7 +204,7 @@ approved_limit = round_to_nearest_100(
 )
 ```
 
-Source: PDF p. 4, “4. Credit Limit Formula”. See `ASM-007` for unresolved midpoint behavior.
+Source: PDF p. 4, “4. Credit Limit Formula”. See `ASM-007` for the approved midpoint interpretation.
 
 #### REQ-022 — CLUSTER_D approved limit
 
@@ -236,7 +236,7 @@ Source: PDF p. 4, “API”.
 
 The endpoint must return the same customer object enriched with all calculated fields from the output contract.
 
-Source: PDF p. 4, “API”. The referenced output contract is missing; see blocking assumption `ASM-002`.
+Source: PDF p. 4, “API”. The referenced official output contract is missing; see `ASM-002` for the approved local fallback.
 
 #### REQ-027 — Stateless operation
 
@@ -286,13 +286,13 @@ Source: PDF p. 5, “Testing (Required)”.
 
 Integration tests must exercise the full request/response cycle and verify that `POST /customers/classify` with valid input returns the correct output contract.
 
-Source: PDF p. 5, “Testing (Required)”. See blocking assumption `ASM-002`.
+Source: PDF p. 5, “Testing (Required)”. The referenced official output contract is missing; see `ASM-002` for the approved local fallback.
 
 #### REQ-035 — Invalid-request integration tests
 
 Integration tests must verify that `POST /customers/classify` with invalid or missing fields returns appropriate error responses.
 
-Source: PDF p. 5, “Testing (Required)”. See `ASM-008` for the unresolved exact HTTP error contract.
+Source: PDF p. 5, “Testing (Required)”. See `ASM-008` for the approved HTTP error-contract interpretation.
 
 #### REQ-036 — Official sample integration tests
 

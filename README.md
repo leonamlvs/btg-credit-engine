@@ -1,82 +1,54 @@
-# btg-credit-engine
+# BTG Pactual Credit Engine
 
-BTG Pactual Credit Engine backend challenge.
+Data-driven credit classification API built with Node.js, TypeScript, Express, and Zod.
 
-## Current status
+The API classifies customers into credit-risk clusters, estimates monthly income, and calculates a
+personalized credit limit.
 
-The repository is bootstrapped, but the business classification engine is intentionally not implemented yet.
+## Live demo
 
-The next development step is to extract and review the challenge requirements and acceptance criteria before asking an AI coding agent to implement business behavior.
+Not deployed yet:
 
-## Stack
+- Swagger UI: <https://btg-credit-engine.onrender.com/docs>
+- Health check: <https://btg-credit-engine.onrender.com/health>
 
-- Node.js 24.19.0
-- TypeScript
-- Express 5
-- Zod 4
-- OpenAPI / Swagger UI
-- Jest + Supertest
-- ESLint + Prettier
-- Pino
-- Helmet
-- Yarn 4
-- GitHub Actions
-- Docker
+## Run with Docker
 
-## Local development
+```bash
+docker build -t credit-engine .
+docker run --rm -p 3000:3000 credit-engine
+```
 
-`powershell
+Swagger UI: <http://localhost:3000/docs>
+
+## Run locally
+
+Requirements: Node.js `24.19.0` and Yarn `4.18.0`.
+
+```bash
 yarn install --immutable
 yarn dev
-`
+```
 
-Default endpoints:
+Swagger UI: <http://localhost:3000/docs>
 
-- GET /health
-- GET /openapi.json
-- GET /docs
+Use Swagger to execute `POST /customers/classify` with the documented request schema.
 
 ## Verification
 
-`powershell
+```bash
 yarn verify
-`
+```
 
-The verification gate includes formatting, linting, type checking, tests, deterministic documentation checks, and build.
+This runs formatting, linting, type checking, unit and integration tests, documentation checks, and
+the production build.
 
-## Useful commands
+## Project highlights
 
-`powershell
-yarn dev
-yarn test
-yarn test:watch
-yarn test:coverage
-yarn lint
-yarn typecheck
-yarn format
-yarn format:check
-yarn docs:check
-yarn build
-yarn verify
-`
+- Business rules are versioned in
+  [`config/rules/credit-engine.v1.json`](config/rules/credit-engine.v1.json) and validated at startup.
+- The application is stateless, with pure domain logic separated from HTTP concerns.
+- Zod schemas provide runtime validation and generate the OpenAPI contract used by Swagger.
 
-## Project documentation
-
-- [Architecture](docs/architecture.md)
-- [Requirements](specs/credit-engine/requirements.md)
-- [Assumptions](specs/credit-engine/assumptions.md)
-- [Acceptance criteria](specs/credit-engine/acceptance.md)
-- [Technical plan](specs/credit-engine/plan.md)
-- [Tasks](specs/credit-engine/tasks.md)
-- [Architecture decisions](docs/adr/)
-- [AI journey](ai-journey/)
-- [Agent operating contract](AGENTS.md)
-
-## Important scope decisions
-
-- The application is stateless.
-- No persistence layer is introduced without a concrete requirement.
-- Authentication is outside the initial challenge scope.
-- Business rules will be data-driven and validated.
-- Runtime contracts use Zod as the source of truth.
-- AI-generated changes must pass the same deterministic yarn verify gate used locally and in CI.
+More details: [architecture](docs/architecture.md), [specification](specs/credit-engine/), and
+[AI-assisted development journey](ai-journey/).

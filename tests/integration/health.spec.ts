@@ -1,11 +1,11 @@
 import { describe, expect, it } from '@jest/globals';
 import request from 'supertest';
 
-import { createApp } from '../../src/app';
+import { createTestApp } from '../helpers/create-test-app';
 
 describe('GET /health', () => {
   it('returns the health contract and a request id', async () => {
-    const response = await request(createApp()).get('/health');
+    const response = await request(createTestApp()).get('/health');
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ status: 'ok' });

@@ -91,3 +91,24 @@ Review changes adversarially for:
 - documentation drift;
 - implementation/specification mismatch;
 - accidental persistence or state.
+
+## Test organization
+
+Keep unit tests under `tests/unit/` and mirror the implementation path
+under `src/`.
+
+A unit test file must use the same base filename as the implementation
+file with the `.spec.ts` suffix.
+
+Example:
+
+```text
+src/modules/credit-engine/domain/customer.schema.ts
+tests/unit/modules/credit-engine/domain/customer.schema.spec.ts
+
+src/modules/credit-engine/domain/cluster-classifier.ts
+tests/unit/modules/credit-engine/domain/cluster-classifier.spec.ts
+
+src/modules/credit-engine/application/classify-customer.ts
+tests/unit/modules/credit-engine/application/classify-customer.spec.ts
+```

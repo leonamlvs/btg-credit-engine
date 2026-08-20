@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "clusters": [
+    {
+      "code": "CLUSTER_A",
+      "name": "Diamond",
+      "priority": 1,
+      "baseLimit": 50000,
+      "cap": 100000,
+      "approved": true,
+      "conditions": [
+        { "operator": "greaterThanOrEqual", "field": "score", "value": 700 },
+        { "operator": "inclusiveRange", "field": "age", "minimum": 25, "maximum": 60 },
+        { "operator": "equals", "field": "has_market_debt", "value": false }
+      ]
+    },
+    {
+      "code": "CLUSTER_B",
+      "name": "Gold",
+      "priority": 2,
+      "baseLimit": 20000,
+      "cap": 40000,
+      "approved": true,
+      "conditions": [
+        { "operator": "greaterThanOrEqual", "field": "score", "value": 500 },
+        { "operator": "inclusiveRange", "field": "age", "minimum": 18, "maximum": 65 },
+        {
+          "operator": "containsNone",
+          "field": "market_debt_types",
+          "values": ["credit_default", "loan_default"]
+        }
+      ]
+    },
+    {
+      "code": "CLUSTER_C",
+      "name": "Silver",
+      "priority": 3,
+      "baseLimit": 5000,
+      "cap": 10000,
+      "approved": true,
+      "conditions": [{ "operator": "greaterThanOrEqual", "field": "score", "value": 300 }]
+    },
+    {
+      "code": "CLUSTER_D",
+      "name": "Bronze",
+      "priority": 4,
+      "baseLimit": 0,
+      "cap": 0,
+      "approved": false,
+      "conditions": [{ "operator": "always" }]
+    }
+  ],
+  "jobCategories": [
+    {
+      "code": "EXECUTIVE",
+      "priority": 1,
+      "multiplier": 2,
+      "matchAny": [
+        {
+          "operator": "containsStandaloneTermCaseInsensitive",
+          "field": "job_title",
+          "values": ["CEO", "CFO", "CTO", "COO", "CIO", "CMO"]
+        },
+        {
+          "operator": "containsAnySubstringCaseInsensitive",
+          "field": "job_title",
+          "values": ["Chief", "President", "Vice President"]
+        },
+        {
+          "operator": "containsStandaloneTermCaseInsensitive",
+          "field": "job_title",
+          "values": ["VP"]
+        },
+        {
+          "operator": "containsAnySubstringCaseInsensitive",
+          "field": "job_title",
+          "values": ["Director"]
+        }
+      ]
+    },
+    {
+      "code": "SENIOR_PROFESSIONAL",
+      "priority": 2,
+      "multiplier": 1.5,
+      "matchAny": [
+        {
+          "operator": "containsAnySubstringCaseInsensitive",
+          "field": "job_title",
+          "values": ["Senior", "Lead", "Manager", "Coordinator", "Supervisor", "Principal"]
+        }
+      ]
+    },
+    {
+      "code": "MID_PROFESSIONAL",
+      "priority": 3,
+      "multiplier": 1,
+      "matchAny": [
+        {
+          "operator": "containsAnySubstringCaseInsensitive",
+          "field": "job_title",
+          "values": [
+            "Engineer",
+            "Analyst",
+            "Developer",
+            "Specialist",
+            "Designer",
+            "Accountant",
+            "Consultant",
+            "Architect"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "JUNIOR_PROFESSIONAL",
+      "priority": 4,
+      "multiplier": 0.7,
+      "matchAny": [
+        {
+          "operator": "containsAnySubstringCaseInsensitive",
+          "field": "job_title",
+          "values": ["Junior", "Trainee", "Intern", "Apprentice", "Assistant", "Associate"]
+        }
+      ]
+    },
+    {
+      "code": "OTHER",
+      "priority": 5,
+      "multiplier": 0.8,
+      "matchAny": [{ "operator": "always" }]
+    }
+  ],
+  "monthlyIncome": {
+    "CLUSTER_A": {
+      "EXECUTIVE": 30000,
+      "SENIOR_PROFESSIONAL": 20000,
+      "MID_PROFESSIONAL": 12000,
+      "JUNIOR_PROFESSIONAL": 8000,
+      "OTHER": 10000
+    },
+    "CLUSTER_B": {
+      "EXECUTIVE": 20000,
+      "SENIOR_PROFESSIONAL": 15000,
+      "MID_PROFESSIONAL": 8000,
+      "JUNIOR_PROFESSIONAL": 5000,
+      "OTHER": 6500
+    },
+    "CLUSTER_C": {
+      "EXECUTIVE": 10000,
+      "SENIOR_PROFESSIONAL": 7000,
+      "MID_PROFESSIONAL": 5000,
+      "JUNIOR_PROFESSIONAL": 3000,
+      "OTHER": 4000
+    },
+    "CLUSTER_D": {
+      "EXECUTIVE": 0,
+      "SENIOR_PROFESSIONAL": 0,
+      "MID_PROFESSIONAL": 0,
+      "JUNIOR_PROFESSIONAL": 0,
+      "OTHER": 0
+    }
+  },
+  "penalties": [
+    {
+      "code": "DEFAULT_DEBT_PENALTY",
+      "priority": 1,
+      "factor": 0.5,
+      "conditions": [
+        {
+          "operator": "containsAny",
+          "field": "market_debt_types",
+          "values": ["credit_default", "loan_default"]
+        }
+      ]
+    }
+  ]
+}
